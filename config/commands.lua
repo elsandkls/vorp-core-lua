@@ -237,7 +237,7 @@ Commands = {
         label = T.addWhitelist.label,
         suggestion = {
             { name = T.addWhitelist.name, help = T.addWhitelist.help },
-
+        
         },
         userCheck = false,
         groupAllowed = { "admin" },
@@ -269,7 +269,7 @@ Commands = {
         commandName = "ban",
         label = T.ban.label,
         suggestion = {
-            { name = T.ban.name,  help = T.ban.help },
+            { name = T.ban.name, help = T.ban.help },
             { name = T.ban.name1, help = T.ban.help1 },
         },
         userCheck = false,
@@ -334,7 +334,7 @@ Commands = {
         commandName = "modifyCharName",
         label = T.charName.label,
         suggestion = {
-            { name = T.charName.name,  help = T.charName.help },
+            { name = T.charName.name, help = T.charName.help },
             { name = T.charName.name1, help = T.charName.help1 },
             { name = T.charName.name2, help = T.charName.help2 },
 
@@ -348,7 +348,7 @@ Commands = {
     },
     charCreateAdd = {
         webhook = "",
-        custom = T.charCreateAdd.custom,
+        custom =T.charCreateAdd.custom,
         title = T.charCreateAdd.title,
         commandName = "addChar",
         label = T.charCreateAdd.label,
