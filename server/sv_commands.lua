@@ -188,10 +188,10 @@ function AddItems(data)
     local item = tostring(data.args[2])
     local count = tonumber(data.args[3])
 
-    local VORPInv = exports.vorp_inventory
-    local itemCheck = VORPInv:getItemDB(item)
-    local canCarry = VORPInv:canCarryItems(target, count)       --can carry inv space
-    local canCarry2 = VORPInv:canCarryItem(target, item, count) --cancarry item limit
+    local VORPInv = exports.vorp_inventory:vorp_inventoryApi()
+    local itemCheck = VORPInv.getDBItem(target, item)
+    local canCarry = VORPInv.canCarryItems(target, count)       --can carry inv space
+    local canCarry2 = VORPInv.canCarryItem(target, item, count) --cancarry item limit
 
     if not itemCheck then
         return print(item .. " < item dont exist in the database", 4000)
@@ -205,7 +205,7 @@ function AddItems(data)
         return VorpCore.NotifyObjective(data.source, Translation[Lang].Notify.cantcarry, 4000)
     end
 
-    VORPInv:addItem(target, item, count)
+    VORPInv.addItem(target, item, count)
     SendDiscordLogs(data.config.webhook, data, data.source, item, count)
     VorpCore.NotifyRightTip(target, string.format(Translation[Lang].Notify.AddItems, item, count), 4000)
 end
@@ -214,13 +214,14 @@ end
 function AddWeapons(data)
     local target = tonumber(data.args[1])
     local weaponHash = tostring(data.args[2])
-    exports.vorp_inventory:canCarryWeapons(target, 1, function(result) --can carry weapons
+    local VORPInv = exports.vorp_inventory:vorp_inventoryApi()
+
+    VORPInv.canCarryWeapons(target, 1, function(result) --can carry weapons
         local canCarry = result
         if not canCarry then
             return VorpCore.NotifyObjective(data.source, T.cantCarry, 4000)
         end
-
-        exports.vorp_inventory:createWeapon(target, weaponHash)
+        VORPInv.createWeapon(target, weaponHash)
         SendDiscordLogs(data.config.webhook, data, data.source, weaponHash, "")
         VorpCore.NotifyRightTip(target, Translation[Lang].Notify.AddWeapons, 4000)
     end, weaponHash)
