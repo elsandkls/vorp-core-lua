@@ -45,7 +45,7 @@ ui_page 'ui/index.html'
 version '2.3'
 vorp_checker 'yes'
 vorp_name '^4Resource version Check^3'
-vorp_github 'https://github.com/VORPCORE/vorp-core-lua'
+vorp_github 'https://github.com/elsandkls/vorp-core-lua'
 
 
 dependencies {
