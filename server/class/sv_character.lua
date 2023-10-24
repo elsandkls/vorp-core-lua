@@ -364,8 +364,10 @@ function Character(source, identifier, charIdentifier, group, job, jobgrade, fir
     end
 
     self.DeleteCharacter = function()
-        MySQL.query("DELETE FROM characters WHERE `identifier` = ? AND `charidentifier` = ? ",
-            { self.Identifier(), self.CharIdentifier() })
+        -- mod by dragon to prevent characters being completely deleted.
+        MySQL.query("UPDATE characters SET `identifier` = 'steam:000000000000000' WHERE `identifier` = ? AND `charidentifier` = ? ",
+        { self.Identifier(), self.CharIdentifier() })
+        -- MySQL.query("DELETE FROM characters WHERE `identifier` = ? AND `charidentifier` = ? ", { self.Identifier(), self.CharIdentifier() })
     end
 
     self.SaveCharacterCoords = function(coords)
