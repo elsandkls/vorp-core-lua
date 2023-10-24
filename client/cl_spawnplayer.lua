@@ -128,9 +128,11 @@ end)
 --================================ EVENTS ============================================--
 
 RegisterNetEvent('vorp:initCharacter', function(coords, heading, isdead)
-    TeleportToCoords(coords, heading)
+    print("vorp_core : initCharacter")
+    TeleportToCoords(coords, heading) 
 
     if isdead then
+        print("isdead")
         if not Config.CombatLogDeath then
             if Config.Loadinscreen then
                 Citizen.InvokeNative(0x1E5B70E53DB661E5, 0, 0, 0, T.forcedrespawn, T.forced,
@@ -156,29 +158,40 @@ RegisterNetEvent('vorp:initCharacter', function(coords, heading, isdead)
             ShutdownLoadingScreen()
         end
     else
+        print("not isdead")
         if Config.Loadinscreen then
             Citizen.InvokeNative(0x1E5B70E53DB661E5, 0, 0, 0, T.Hold, T.Load, T.Almost)
             Wait(Config.LoadinScreenTimer)
             Wait(1000)
             ShutdownLoadingScreen()
+            print("stop loading screen")
         end
 
+        print("health recharge")
         if not Config.HealthRecharge.enable then
+            print("false")
             Citizen.InvokeNative(0x8899C244EBCF70DE, PlayerId(), 0.0)                              -- SetPlayerHealthRechargeMultiplier
         else
+            print("true")
             Citizen.InvokeNative(0x8899C244EBCF70DE, PlayerId(), Config.HealthRecharge.multiplier) -- SetPlayerHealthRechargeMultiplier
             multiplierHealth = Citizen.InvokeNative(0x22CD23BB0C45E0CD, PlayerId())                -- GetPlayerHealthRechargeMultiplier
         end
 
+        print("stamina recharge")
         if not Config.StaminaRecharge.enable then
+            print("false")
             Citizen.InvokeNative(0xFECA17CF3343694B, PlayerId(), 0.0)                               -- SetPlayerStaminaRechargeMultiplier
         else
+            print("true")
             Citizen.InvokeNative(0xFECA17CF3343694B, PlayerId(), Config.StaminaRecharge.multiplier) -- SetPlayerStaminaRechargeMultiplier
             multiplierStamina = Citizen.InvokeNative(0x617D3494AD58200F, PlayerId())                -- GetPlayerStaminaRechargeMultiplier
         end
 
+        print("SavePlayersStatus")
         if Config.SavePlayersStatus then
+            print("true")
             TriggerServerEvent("vorp:GetValues")
+            print("GetValues health and set")
             Wait(10000)
             local player = PlayerPedId()
             Citizen.InvokeNative(0xC6258F41D86676E0, player, 0, HealthData.hInner)
@@ -187,9 +200,11 @@ RegisterNetEvent('vorp:initCharacter', function(coords, heading, isdead)
             Citizen.InvokeNative(0x675680D089BFA21F, player, HealthData.sOuter / 1065353215 * 100)
             HealthData = {}
         else
+            print("false")          
+            --TriggerEvent("vorpcharacter:reloadafterdeath")
             CoreAction.Admin.HealPlayer()
         end
-    end
+    end     
 end)
 
 --========================================= PLAYER SPAWN AFTER SELECT CHARACTER =======================================--
